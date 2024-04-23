@@ -67,7 +67,7 @@ final class TelegramBot
         ]);
     }
 
-    public function sendMessageWithPhotos(string $channel, string $text, array $images): ServerResponse
+    public function sendMessageWithPhotos(int|string $channel, string $text, array $images): ServerResponse
     {
         Request::initialize($this->telegram);
 
