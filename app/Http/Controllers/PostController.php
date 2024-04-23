@@ -14,13 +14,15 @@ class PostController extends MoonShineController
     /**
      * @throws TelegramException
      */
-    public function post(TelegramBot $bot)
+    public function post()
     {
         $postId = request()->validate([
             'id' => ['int', 'required']
         ])['id'];
 
         $post = Post::query()->where('id', $postId)->firstOrFail();
+
+        $bot = new TelegramBot($post->channel->bot->bot_key, $post->channel->bot->getAliasForBot());
 
         try {
             PostAction::make($post, $bot)->handle();

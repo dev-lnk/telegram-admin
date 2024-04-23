@@ -12,6 +12,7 @@ use MoonShine\Components\FlexibleRender;
 use MoonShine\Components\FormBuilder;
 use MoonShine\Fields\Hidden;
 use MoonShine\Fields\Number;
+use MoonShine\Fields\Relationships\BelongsTo;
 use MoonShine\Fields\Switcher;
 use MoonShine\Resources\ModelResource;
 use MoonShine\Decorations\Block;
@@ -35,7 +36,9 @@ class ChannelResource extends ModelResource
             Block::make([
                 ID::make('id')->sortable(),
 
-                Text::make('Название канала', 'name'),
+                Text::make('Название канала', 'name')->required(),
+
+                BelongsTo::make('Бот', 'bot', resource: new BotResource())->required(),
 
                 Text::make('Ссылка на канал', 'telegram_url')
                     ->hideOnIndex(),
@@ -75,6 +78,7 @@ class ChannelResource extends ModelResource
     {
         return [
             'name' => ['required'],
+            'bot_id' => ['required'],
             'telegram_url' => 'required_without:chat_id',
             'chat_id' => 'required_without:telegram_url',
         ];

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\MoonShine\Resources\BotResource;
 use App\MoonShine\Resources\ChannelResource;
 use App\MoonShine\Resources\PostResource;
+use Illuminate\Support\Facades\Vite;
 use MoonShine\Providers\MoonShineApplicationServiceProvider;
 use MoonShine\MoonShine;
 use MoonShine\Menu\MenuGroup;
@@ -19,6 +21,15 @@ use Closure;
 
 class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
 {
+    public function boot(): void
+    {
+        parent::boot();
+
+        moonShineAssets()->add([
+            Vite::asset('resources/js/app.js'),
+        ]);
+    }
+
     /**
      * @return list<ResourceContract>
      */
@@ -49,6 +60,11 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
                 static fn() => 'Каналы',
                 new ChannelResource()
             ),
+            MenuItem::make(
+                static fn() => 'Боты',
+                new BotResource()
+            ),
+
             MenuGroup::make(static fn() => __('moonshine::ui.resource.system'), [
                 MenuItem::make(
                     static fn() => __('moonshine::ui.resource.admins_title'),

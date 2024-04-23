@@ -1,4 +1,7 @@
 {
+  "withMigration": false,
+  "withModel": false,
+  "withResource": false,
   "resources" : [
     {
       "ChannelResource" : {

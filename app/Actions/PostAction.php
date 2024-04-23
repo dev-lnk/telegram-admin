@@ -38,6 +38,7 @@ final class PostAction
             ->replace('<p>', '')
             ->replace('</p>', '')
             ->replace('<br>', PHP_EOL)
+            ->replace('&nbsp;', ' ')
             ->value();
 
         $channelId = $this->post->channel->chat_id ?? $this->post->channel->getAliasForBot();

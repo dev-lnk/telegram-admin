@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Channel extends Model
 {
@@ -29,5 +30,10 @@ class Channel extends Model
         }
 
         return $alias;
+    }
+
+    public function bot(): BelongsTo
+    {
+        return $this->belongsTo(Bot::class);
     }
 }

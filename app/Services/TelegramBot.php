@@ -14,18 +14,15 @@ final class TelegramBot
 {
     private Telegram $telegram;
 
-    protected string $botApiKey;
-
-    protected string $botUsername;
-
     private array $channels = [];
 
     /**
      * @throws TelegramException
      */
-    public function __construct() {
-        $this->botApiKey = config('telegram.bot_key');
-        $this->botUsername = config('telegram.bot_name');
+    public function __construct(
+        private string $botApiKey,
+        private string $botUsername
+    ) {
         $this->setBot();
     }
 
