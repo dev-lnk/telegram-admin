@@ -1,0 +1,68 @@
+version: '3.8'
+
+networks:
+ custom-network-tg:
+
+services:
+  nginx-telegram-admin:
+    build: ./docker/Nginx
+    container_name: nginx-telegram-admin
+    ports:
+      - ${LOCAL_WEB_PORT}:${APP_WEB_PORT}
+    volumes:
+      - ${LOCAL_PATH_HOST}:${APP_PATH}
+      - ./docker/volumes/Nginx/core:/etc/nginx/
+      - ./docker/volumes/Nginx/logs:/var/log/nginx/
+    depends_on:
+      - php-telegram-admin
+    networks:
+      - custom-network-tg
+
+  php-telegram-admin:
+    build:
+      context: ./docker/PHP8
+      args:
+        docker_user: ${DOCKER_USER}
+    container_name: php-telegram-admin
+    volumes:
+      - ${LOCAL_PATH_HOST}:${APP_PATH}
+    depends_on:
+      - db-telegram-admin
+    networks:
+      - custom-network-tg
+
+  db-telegram-admin:
+    image: mariadb:11.2.3
+    container_name: db-telegram-admin
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+    volumes:
+      - ./docker/volumes/MySQL/lib:/var/lib/mysql
+      - ./docker/volumes/MySQL/dump:/docker-entrypoint-initdb.d
+    ports:
+      - ${LOCAL_MYSQL_PORT}:${APP_MYSQL_PORT}
+    networks:
+      - custom-network-tg
+
+  redis-telegram-admin:
+    image: redis:7.2.4-alpine3.19
+    command: ["redis-server", "--appendonly", "yes"]
+    container_name: redis-telegram-admin
+    ports:
+      - ${LOCAL_REDIS_PORT}:${APP_REDIS_PORT}
+    networks:
+      - custom-network-tg
+
+  npm-telegram-admin:
+    build: ./docker/Node
+    container_name: npm-telegram-admin
+    volumes:
+      - ${LOCAL_PATH_HOST}:${APP_PATH}:cached
+      - ${LOCAL_PATH_HOST}.env:${APP_PATH}/.env
+    working_dir: ${APP_PATH}
+    profiles: ["npm"]
+    entrypoint: ['npm']
+    ports:
+      - ${VITE_PORT}:${VITE_PORT}
+    networks:
+      - custom-network-tg

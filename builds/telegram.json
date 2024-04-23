@@ -1,0 +1,134 @@
+{
+  "resources" : [
+    {
+      "ChannelResource" : {
+        "column": "name",
+        "fields": {
+          "id": {
+            "type": "id",
+            "methods": [
+              "sortable"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "name": "Название канала"
+          },
+          "telegram_url": {
+            "type": "string",
+            "name": "Ссылка",
+            "methods": [
+              "hideOnIndex()"
+            ]
+          },
+          "chat_id": {
+            "type": "bigInteger",
+            "name": "Id канала"
+          },
+          "is_repeat_post": {
+            "type": "tinyInteger",
+            "name": "Повторная публикация постов"
+          },
+          "created_at": {
+            "type": "timestamp",
+            "migration": {
+              "methods": [
+                "useCurrent()"
+              ]
+            }
+          }
+        }
+      },
+      "PostResource" : {
+        "fields": {
+          "id": {
+            "type": "id",
+            "methods": [
+              "sortable"
+            ]
+          },
+          "channel_id": {
+            "type": "BelongsTo",
+            "relation": "channel",
+            "name": "Канал"
+          },
+          "name": {
+            "type": "string",
+            "name": "Пост"
+          },
+          "content": {
+            "type": "text",
+            "field": "TinyMce",
+            "name": "Контент",
+            "methods": [
+              "plugins('code emoticons preview')",
+              "toolbar('undo redo | bold italic underline strikethrough | emoticons charmap | removeformat preview')",
+              "addConfig('newline_behavior', 'linebreak')",
+              "hideOnIndex()"
+            ],
+            "migration": {
+              "methods": [
+                "nullable()"
+              ]
+            }
+          },
+          "images": {
+            "type": "text",
+            "field": "Image",
+            "name": "Изображение",
+            "methods": [
+              "disk('public')",
+              "dir('images')",
+              "multiple()"
+            ],
+            "migration": {
+              "methods": [
+                "nullable()"
+              ]
+            }
+          },
+          "moonshine_user_id": {
+            "type": "BelongsTo",
+            "relation": "moonshineUser",
+            "model_class": "\\MoonShine\\Models\\MoonshineUser",
+            "resource_class": "\\MoonShine\\Resources\\MoonShineUserResource",
+            "name": "Пользователь"
+          },
+          "created_at": {
+            "type": "timestamp",
+            "migration": {
+              "methods": [
+                "useCurrent()"
+              ]
+            }
+          },
+          "when_to_post": {
+            "type": "timestamp",
+            "field": "Date",
+            "methods": [
+              "withTime()",
+              "format('m.d H:i')",
+              "sortable()"
+            ],
+            "migration": {
+              "methods": [
+                "nullable()"
+              ]
+            }
+          },
+          "posted_at": {
+            "type": "timestamp",
+            "methods": [
+              "withTime()"
+            ],
+            "migration": {
+              "methods": [
+                "nullable()"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}
