@@ -43,7 +43,6 @@ class ChannelResource extends ModelResource
                 Number::make('ChatId канала', 'chat_id')
                     ->min(-pow(2, 63))
                     ->max(pow(2, 63) - 1)
-                    ->hint('Чтобы получить ChatId для приватного канала, сделайте его на время публичным и добавьте ссылку на канал')
                     ->hideOnIndex(),
 
                 Switcher::make('Повторная публикация постов', 'is_repeat_post')
