@@ -1,7 +1,6 @@
 ### Администрирование ТГ-каналов
 ## Установка
 - Создать .env и скопировать всё из .env.example
-- Добавить TELEGRAM_BOT_KEY и TELEGRAM_BOT_NAME в .env
 - Выполнить установку с помощью docker
 ```shell
 docker-compose up --build -d
@@ -15,3 +14,8 @@ make build
 php artisan migrate --seed
 php artisan storage:link
 ```
+или выполнить из терминала
+```shell
+make install
+```
+- Перейти на http://localhost/login, Пользователь: admin@mail.ru, пароль: 12345

@@ -14,6 +14,10 @@ up:
 	docker-compose -f docker-compose.yml up -d $(c)
 it:
 	docker exec -it $(app) /bin/bash
+install:
+	docker exec $(app) php $(path)/artisan migrate --seed
+	docker exec $(app) php $(path)/artisan storage:link
+
 #laravel
 migrate:
 	docker exec $(app) php $(path)/artisan migrate
