@@ -1,4 +1,5 @@
 ### Администрирование ТГ-каналов
+![logo](https://raw.githubusercontent.com/dev-lnk/telegram-admin/master/public/images/admin.png)
 ## Установка
 - Создать .env и скопировать всё из .env.example
 - Выполнить установку с помощью docker
