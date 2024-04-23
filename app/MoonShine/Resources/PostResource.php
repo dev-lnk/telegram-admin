@@ -56,6 +56,7 @@ class PostResource extends ModelResource
                 Image::make('Изображения', 'images')
                     ->disk('public')
                     ->dir('images')
+                    ->removable()
                     ->multiple(),
 
                 BelongsTo::make('Пользователь', 'moonshineUser', resource: new MoonShineUserResource()),
