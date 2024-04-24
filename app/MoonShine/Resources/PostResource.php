@@ -11,7 +11,6 @@ use MoonShine\ActionButtons\ActionButton;
 use MoonShine\Components\FlexibleRender;
 use MoonShine\Components\FormBuilder;
 use MoonShine\Fields\Hidden;
-use MoonShine\Fields\Textarea;
 use MoonShine\Resources\ModelResource;
 use MoonShine\Decorations\Block;
 use MoonShine\Fields\ID;
