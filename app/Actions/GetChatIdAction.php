@@ -6,8 +6,8 @@ namespace App\Actions;
 
 use App\Exceptions\ChannelException;
 use App\Models\Channel;
+use App\Support\Makeable;
 use Illuminate\Support\Facades\Http;
-use MoonShine\Traits\Makeable;
 
 final class GetChatIdAction
 {

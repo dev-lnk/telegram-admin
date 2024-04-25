@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Post;
 
@@ -28,9 +29,7 @@ class PostResource extends ModelResource
 {
     protected string $model = Post::class;
 
-    protected string $title = 'Post';
-
-    protected string $sortColumn = 'when_to_post';
+    protected string $title = '';
 
     public function fields(): array
     {
@@ -68,6 +67,7 @@ class PostResource extends ModelResource
                 Date::make('Опубликовано', 'posted_at')
                     ->format('m.d H:i')
                     ->hideOnForm()
+                    ->sortable(),
             ]),
         ];
     }
@@ -76,7 +76,7 @@ class PostResource extends ModelResource
     {
         return [
             ActionButton::make('Опубликовать', route('post'))
-                ->canSee(fn (Model $item) => $item->channel->is_repeat_post || $item->posted_at === null)
+                ->canSee(fn (Model $item) => $item->channel->is_test_channel || $item->posted_at === null)
                 ->primary()
                 ->withConfirm(
                     'Публикация',
@@ -86,6 +86,22 @@ class PostResource extends ModelResource
                     ])
                 )
         ];
+    }
+
+    public function query(): Builder
+    {
+        if(request()->has('sort')) {
+            return parent::query();
+        }
+
+        return parent::query()
+            ->orderByRaw(
+                "CASE
+                    WHEN `posted_at` IS NULL THEN 0
+                    ELSE 1
+                END"
+            )
+            ->orderByDesc('posted_at');
     }
 
     public function filters(): array

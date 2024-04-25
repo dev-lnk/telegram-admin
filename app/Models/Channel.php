@@ -13,6 +13,7 @@ class Channel extends Model
         'name',
         'telegram_url',
         'chat_id',
+        'is_test_channel',
         'created_at',
     ];
 

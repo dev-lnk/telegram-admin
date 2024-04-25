@@ -7,9 +7,9 @@ namespace App\Actions;
 use App\Exceptions\PostException;
 use App\Models\Post;
 use App\Services\TelegramBot;
+use App\Support\Makeable;
 use Illuminate\Support\Facades\Storage;
 use Longman\TelegramBot\Exception\TelegramException;
-use MoonShine\Traits\Makeable;
 
 final class PostAction
 {
@@ -49,8 +49,9 @@ final class PostAction
             throw new PostException("Ошибка публикации поста. {$result->raw_data['description']}. Code: {$result->raw_data['error_code']}");
         }
 
-        $this->post->posted_at = now();
-
-        $this->post->save();
+        if(! $this->post->channel->is_test_channel) {
+            $this->post->posted_at = now();
+            $this->post->save();
+        }
     }
 }

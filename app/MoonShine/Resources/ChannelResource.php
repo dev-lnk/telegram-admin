@@ -48,7 +48,8 @@ class ChannelResource extends ModelResource
                     ->max(pow(2, 63) - 1)
                     ->hideOnIndex(),
 
-                Switcher::make('Повторная публикация постов', 'is_repeat_post')
+                Switcher::make('Тестовый канал', 'is_test_channel')
+                    ->hint('Если флаг установлен, то при публикации поста не будет установлена дата публикации')
             ]),
         ];
     }
