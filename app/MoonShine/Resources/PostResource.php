@@ -45,9 +45,7 @@ class PostResource extends ModelResource
                     ->plugins('code emoticons preview link')
                     ->toolbar('undo redo | bold italic underline strikethrough | emoticons charmap | removeformat preview link code')
                     ->addConfig('newline_behavior', 'linebreak')
-                    ->customAttributes([
-                        'id' => 'contentInput'
-                    ])
+                    ->addConfig('browser_spellchek', 'true')
                     ->hideOnIndex()
                 ,
 

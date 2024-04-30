@@ -21,15 +21,6 @@ use Closure;
 
 class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
 {
-    public function boot(): void
-    {
-        parent::boot();
-
-        moonShineAssets()->add([
-            Vite::asset('resources/js/app.js'),
-        ]);
-    }
-
     /**
      * @return list<ResourceContract>
      */
