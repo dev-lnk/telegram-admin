@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\PostAction;
 use App\Api\Coze\CozeApi;
+use App\Api\Coze\CozeApiException;
 use App\Exceptions\PostException;
 use App\Models\Post;
 use App\Services\TelegramBot;
@@ -48,6 +49,10 @@ class PostController extends MoonShineController
 
         try {
             $result = $response->content();
+
+            if(empty($result['messages'])) {
+                throw new CozeApiException('Content: '. json_encode($result));
+            }
 
             $review = $result['messages'][0]['content'];
         } catch (\Throwable $e) {
