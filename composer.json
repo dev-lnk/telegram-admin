@@ -1,16 +1,17 @@
 {
     "name": "laravel/laravel",
+    "version": "11.0",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "dev-lnk/moonshine-builder": "^0.2.1",
+        "dev-lnk/moonshine-builder": "*",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
-        "moonshine/moonshine": "^2.11",
-        "longman/telegram-bot": "*"
+        "longman/telegram-bot": "*",
+        "moonshine/moonshine": "^2.11"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
