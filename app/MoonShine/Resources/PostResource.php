@@ -11,6 +11,7 @@ use App\Models\Post;
 use MoonShine\ActionButtons\ActionButton;
 use MoonShine\Components\FlexibleRender;
 use MoonShine\Components\FormBuilder;
+use MoonShine\Enums\JsEvent;
 use MoonShine\Fields\Hidden;
 use MoonShine\Resources\ModelResource;
 use MoonShine\Decorations\Block;
@@ -21,6 +22,8 @@ use MoonShine\Fields\TinyMce;
 use MoonShine\Fields\Image;
 use MoonShine\Fields\Date;
 use MoonShine\Resources\MoonShineUserResource;
+use MoonShine\Support\AlpineJs;
+use MoonShine\Components\Modal;
 
 /**
  * @extends ModelResource<Post>
@@ -83,6 +86,23 @@ class PostResource extends ModelResource
                         Hidden::make('id')->setValue($item->id)
                     ])
                 )
+            ,
+            ActionButton::make('AI review', fn($item) => route('ai-review', ['id' => $item->id]))
+                ->async(
+                    'POST',
+                    '#ai-review',
+                    [AlpineJs::event(JsEvent::MODAL_TOGGLED, 'ai-review-modal')]
+                )
+        ];
+    }
+
+    public function formPageComponents(): array
+    {
+        return [
+            Modal::make(
+                'Результат редактирования',
+                static fn() => FlexibleRender::make('<div id="ai-review"></div>')
+            )->name('ai-review-modal')
         ];
     }
 
