@@ -30,12 +30,10 @@ if [ ! -f $PROJECT_DIR"/.env" ]; then
     php artisan key:generate
 fi
 
-sudo chown -R www-data:www-data $PROJECT_DIR
+sudo chown -R develop:www-data $PROJECT_DIR
 
 php artisan storage:link
 php artisan optimize:clear
 
 php artisan migrate --force
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+php artisan optimize
