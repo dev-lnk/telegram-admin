@@ -50,10 +50,9 @@ RUN if [[ -d '/var/www/app/storage' ]] ; then chmod -R 775 ./storage ./bootstrap
 USER $user
 
 FROM php AS prod
-# TODO PROD
-COPY ./src/composer*.json /var/www/app/
+COPY ./deploy/composer*.json /var/www/app/
 RUN composer install --no-interaction --optimize-autoloader --no-dev --no-scripts
-COPY . /var/www/app
+COPY ./deploy /var/www/app
 RUN chown -R $user:$user /var/www/app && \
     chmod -R 775 ./storage ./bootstrap/cache
 USER $user

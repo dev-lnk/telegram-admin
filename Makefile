@@ -82,16 +82,15 @@ npm-host:
 
 # TODO сбор контейнеров на локальном окружении
 docker-build:
-	sudo rm -rf src/vendor
-	sudo rm -rf src/node_modules
-	sudo rm -f src/bootstrap/cache/*.php
-	#build
-	docker build -t $(DOCKER_HUB_USER)/$(COMPOSE_PROJECT_NAME)-php:$(tag) --target=prod --build-arg user=$(DOCKER_USER) --build-arg uid=1000 -f docker/dockerfiles/php.Dockerfile .
-	docker build -t $(DOCKER_HUB_USER)/$(COMPOSE_PROJECT_NAME)-scheduler:$(tag) --target=scheduler --build-arg user=$(DOCKER_USER) --build-arg uid=1000 -f docker/dockerfiles/php.Dockerfile .
-	docker build -t $(DOCKER_HUB_USER)/$(COMPOSE_PROJECT_NAME)-nginx:$(tag) --target=prod -f docker/dockerfiles/nginx.Dockerfile .
-	docker build -t $(DOCKER_HUB_USER)/$(COMPOSE_PROJECT_NAME)-mysql:$(tag) --build-arg password=$(DB_PASSWORD) -f docker/dockerfiles/mysql.Dockerfile .
-	#push
+	mkdir deploy
+	git clone $(GIT_REPOSITORY) deploy
+	docker build -t $(DOCKER_HUB_USER)/$(COMPOSE_PROJECT_NAME)-php:$(tag) --target=prod --build-arg user=$(DOCKER_USER) --build-arg uid=1000 -f docker/dockerfiles/php/Dockerfile .
+#	docker build -t $(DOCKER_HUB_USER)/$(COMPOSE_PROJECT_NAME)-scheduler:$(tag) --target=scheduler --build-arg user=$(DOCKER_USER) --build-arg uid=1000 -f docker/dockerfiles/php.Dockerfile .
+#	docker build -t $(DOCKER_HUB_USER)/$(COMPOSE_PROJECT_NAME)-nginx:$(tag) --target=prod -f docker/dockerfiles/nginx.Dockerfile .
+#	docker build -t $(DOCKER_HUB_USER)/$(COMPOSE_PROJECT_NAME)-mysql:$(tag) --build-arg password=$(DB_PASSWORD) -f docker/dockerfiles/mysql.Dockerfile .
+#	#push
 	docker push $(DOCKER_HUB_USER)/$(COMPOSE_PROJECT_NAME)-php:$(tag)
-	docker push $(DOCKER_HUB_USER)/$(COMPOSE_PROJECT_NAME)-scheduler:$(tag)
-	docker push $(DOCKER_HUB_USER)/$(COMPOSE_PROJECT_NAME)-nginx:$(tag)
-	docker push $(DOCKER_HUB_USER)/$(COMPOSE_PROJECT_NAME)-mysql:$(tag)
+#	docker push $(DOCKER_HUB_USER)/$(COMPOSE_PROJECT_NAME)-scheduler:$(tag)
+#	docker push $(DOCKER_HUB_USER)/$(COMPOSE_PROJECT_NAME)-nginx:$(tag)
+#	docker push $(DOCKER_HUB_USER)/$(COMPOSE_PROJECT_NAME)-mysql:$(tag)
+	rm -r deploy
