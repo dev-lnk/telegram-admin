@@ -19,5 +19,6 @@ yarn-error.log
 /.vscode
 
 #docker
-/docker/volumes/Nginx/logs
-/docker/volumes/MySQL/lib
+/docker/volumes/nginx
+/docker/volumes/mysql
+/docker/volumes/redis

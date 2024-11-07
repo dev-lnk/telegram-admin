@@ -8,5 +8,3 @@ GRANT ALL PRIVILEGES ON `telegram_admin_test`.* TO 'telegram_admin'@'%';
 
 GRANT SELECT  ON `information\_schema`.* TO 'telegram_admin'@'%';
 FLUSH PRIVILEGES;
-
-SET GLOBAL time_zone = 'Europe/Moscow';
